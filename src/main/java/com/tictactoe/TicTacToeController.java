@@ -1,6 +1,10 @@
 package com.tictactoe;
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.io.IOException;
+
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,39 +14,34 @@ import com.tictactoe.bl.TicTacToeService;
 @RestController
 public class TicTacToeController {
 
-//    private static final String template = "Hello, %s!";
-//    private final AtomicLong counter = new AtomicLong();
     TicTacToeService ticTacToeService = new TicTacToeService();
-
-//    @RequestMapping("/greeting")
-//    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
-//        return new Greeting(counter.incrementAndGet(),
-//                            String.format(template, name));
-//    }
     
     @RequestMapping("/new")
-    public TicTacToe newGame() {
-    	System.out.println("New Game Request");
+    public String newGame() throws JsonGenerationException, JsonMappingException, IOException {
     	if(ticTacToeService.getStatus() == null) {
-    		System.out.println("Game In Progress");
-    		 return ticTacToeService.getNewGame();
+    		return getResponseString(ticTacToeService.getNewGame());
     	}
         return null;
     }
 
     @RequestMapping("/play")
-    public TicTacToe playMove(@RequestParam(value="player") String player, @RequestParam(value="x") String x, @RequestParam(value="y") String y) {
+    public String playMove(@RequestParam(value="player") String player, @RequestParam(value="x") String x, @RequestParam(value="y") String y) throws JsonGenerationException, JsonMappingException, NumberFormatException, IOException {
     	if(ticTacToeService.getStatus() != null) {
-   		 	return ticTacToeService.playMove(Player.getPlayer(Integer.parseInt(player)), Integer.parseInt(x), Integer.parseInt(y));
+   		 	return getResponseString(ticTacToeService.playMove(Player.getPlayer(Integer.parseInt(player)), Integer.parseInt(x), Integer.parseInt(y)));
     	}
     	return null;
     }
     
     @RequestMapping("/status")
-    public TicTacToe getStatus() {
+    public String getStatus() throws JsonGenerationException, JsonMappingException, IOException {
     	if(ticTacToeService.getStatus() != null) {
-    		 return ticTacToeService.getStatus();
+    		 return getResponseString(ticTacToeService.getStatus());
     	}
         return null;
+    }
+    
+    private String getResponseString(Object obj) throws JsonGenerationException, JsonMappingException, IOException {
+    	ObjectMapper objMapper = new ObjectMapper();
+    	return objMapper.writeValueAsString(obj);
     }
 }

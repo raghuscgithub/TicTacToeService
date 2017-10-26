@@ -1,15 +1,18 @@
 package com.tictactoe;
 
-import java.util.Scanner;
-
 public class TicTacToe {
+
 	int boardSize = 3;
 	Integer[][] board = new Integer[boardSize][boardSize];
 	Integer[] moves = new Integer[boardSize * boardSize];
 	int totalMoves = 0;
+
+	Player nextTurn = null;
+	Player prevPlayer = null;
+	MoveStatus moveStatus = null;
 	Result result = null;
 	PlayStatus playStatus = PlayStatus.NEW;
-	
+
 	public TicTacToe() {
 		initializeBoard();
 		setPlayStatus(PlayStatus.IN_PROGRESS);
@@ -24,7 +27,7 @@ public class TicTacToe {
 		}
 	}
 
-	private void setPlayStatus(PlayStatus status) {
+	public void setPlayStatus(PlayStatus status) {
 		playStatus = status;
 	}
 
@@ -35,18 +38,38 @@ public class TicTacToe {
 	public PlayStatus getPlayStatus() {
 		return playStatus;
 	}
+	
+	public MoveStatus getMoveStatus() {
+		return moveStatus;
+	}
+
+	public void setMoveStatus(MoveStatus moveStatus) {
+		this.moveStatus = moveStatus;
+	}
+
+	public Player getNextTurn() {
+		return nextTurn;
+	}
+
+	public void setResult(Result result) {
+		this.result = result;
+	}
 
 	public void playMove(Player player, Integer x, Integer y) {
 		if(!isGameComplete() && totalMoves != boardSize * boardSize) {
-			if(board[x][y] == 0) {
+			if(board[x][y] == 0 && player != prevPlayer) {
 				board[x][y] = player.getValue();
 				totalMoves++;
-				//printBoard();
+				moveStatus = MoveStatus.VALID;
+				prevPlayer = player;
+				setNextTurn(player);
+			} else {
+				moveStatus = MoveStatus.INVALID;
 			}
-			
+
 			if(isGameComplete()) {
 				playStatus = PlayStatus.COMPLETE;
-				result = Result.PLAYER_ONE;
+				result = Result.getResult(player.getValue());
 				return;
 			}
 		}
@@ -54,6 +77,14 @@ public class TicTacToe {
 		if(isGameComplete() == false && totalMoves == boardSize * boardSize) {
 			result = Result.DRAW;
 			playStatus = PlayStatus.COMPLETE;
+		}
+	}
+
+	private void setNextTurn(Player player) {
+		if(player == Player.PLAYER_ONE) {
+			nextTurn = Player.PLAYER_TWO;
+		} else {
+			nextTurn = Player.PLAYER_ONE;
 		}
 	}
 
