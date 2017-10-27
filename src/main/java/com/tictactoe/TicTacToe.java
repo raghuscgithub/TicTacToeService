@@ -7,8 +7,8 @@ public class TicTacToe {
 	Integer[] moves = new Integer[boardSize * boardSize];
 	int totalMoves = 0;
 
-	Player nextTurn = null;
-	Player prevPlayer = null;
+	PlayerEnum nextTurn = null;
+	PlayerEnum prevPlayer = null;
 	MoveStatus moveStatus = null;
 	Result result = null;
 	PlayStatus playStatus = PlayStatus.NEW;
@@ -47,7 +47,7 @@ public class TicTacToe {
 		this.moveStatus = moveStatus;
 	}
 
-	public Player getNextTurn() {
+	public PlayerEnum getNextTurn() {
 		return nextTurn;
 	}
 
@@ -55,7 +55,7 @@ public class TicTacToe {
 		this.result = result;
 	}
 
-	public void playMove(Player player, Integer x, Integer y) {
+	public void playMove(PlayerEnum player, Integer x, Integer y) {
 		if(playStatus == PlayStatus.NEW) {
 			playStatus = PlayStatus.IN_PROGRESS;
 		}
@@ -84,11 +84,11 @@ public class TicTacToe {
 		}
 	}
 
-	private void setNextTurn(Player player) {
-		if(player == Player.PLAYER_ONE) {
-			nextTurn = Player.PLAYER_TWO;
+	private void setNextTurn(PlayerEnum player) {
+		if(player == PlayerEnum.PLAYER_ONE) {
+			nextTurn = PlayerEnum.PLAYER_TWO;
 		} else {
-			nextTurn = Player.PLAYER_ONE;
+			nextTurn = PlayerEnum.PLAYER_ONE;
 		}
 	}
 

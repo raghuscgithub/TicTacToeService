@@ -31,7 +31,7 @@ public class TicTacToeController {
     public String playMove(@RequestParam(value="player") String player, @RequestParam(value="x") String x, @RequestParam(value="y") String y) throws JsonGenerationException, JsonMappingException, NumberFormatException, IOException {
     	if(ticTacToeService.getStatus() != null) {
     		if(ticTacToeService.getStatus().getPlayStatus() != PlayStatus.COMPLETE) {
-   		 		return getResponseString(ticTacToeService.playMove(Player.getPlayer(Integer.parseInt(player)), Integer.parseInt(x), Integer.parseInt(y)));
+   		 		return getResponseString(ticTacToeService.playMove(PlayerEnum.getPlayer(Integer.parseInt(player)), Integer.parseInt(x), Integer.parseInt(y)));
     		} else {
     			Error err = new Error("Game Over..!! Create a new game");
     			return getResponseString(err);
@@ -51,6 +51,16 @@ public class TicTacToeController {
     		return getResponseString(err);
     	}
     }
+    
+//    @RequestMapping("/metrics")
+//    public String getMetrics() throws JsonGenerationException, JsonMappingException, IOException {
+//    	if(ticTacToeService.getStatus() != null) {
+//    		 return getResponseString(ticTacToeService.getStatus());
+//    	} else {
+//    		Error err = new Error("No Game In progress, Create a new game");
+//    		return getResponseString(err);
+//    	}
+//    }
     
     private String getResponseString(Object obj) throws JsonGenerationException, JsonMappingException, IOException {
     	ObjectMapper objMapper = new ObjectMapper();

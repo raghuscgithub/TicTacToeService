@@ -1,6 +1,6 @@
 package com.tictactoe.bl;
 
-import com.tictactoe.Player;
+import com.tictactoe.PlayerEnum;
 import com.tictactoe.TicTacToe;
 
 public class TicTacToeService {
@@ -14,7 +14,7 @@ public class TicTacToeService {
 		return tacTacToe;
 	}
 
-	public TicTacToe playMove(Player player, int x, int y) {
+	public TicTacToe playMove(PlayerEnum player, int x, int y) {
 		tacTacToe.playMove(player, x, y);
 		tacTacToe.printBoard();
 		return tacTacToe;

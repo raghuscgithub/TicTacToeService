@@ -14,5 +14,4 @@ public class Error {
 	public void setMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
-  
 }

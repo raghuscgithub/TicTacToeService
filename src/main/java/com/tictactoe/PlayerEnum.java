@@ -1,12 +1,12 @@
 package com.tictactoe;
 
-public enum Player {
+public enum PlayerEnum {
 	PLAYER_ONE(1),
 	PLAYER_TWO(2);
 
 	int val;
 	
-	Player(int i) {
+	PlayerEnum(int i) {
 		val = i;
 	}
 	
@@ -14,8 +14,8 @@ public enum Player {
 		return val;
 	}
 	
-	 public static Player getPlayer(int i) {
-		for(Player player : Player.values()) {
+	 public static PlayerEnum getPlayer(int i) {
+		for(PlayerEnum player : PlayerEnum.values()) {
 			if(player.getValue() == i) {
 				return player;
 			}
