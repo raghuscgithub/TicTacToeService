@@ -16,6 +16,7 @@ public class TicTacToeService {
 
 	public TicTacToe playMove(Player player, int x, int y) {
 		tacTacToe.playMove(player, x, y);
+		tacTacToe.printBoard();
 		return tacTacToe;
 	}
 	

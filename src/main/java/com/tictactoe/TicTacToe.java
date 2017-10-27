@@ -15,16 +15,16 @@ public class TicTacToe {
 
 	public TicTacToe() {
 		initializeBoard();
-		setPlayStatus(PlayStatus.IN_PROGRESS);
 	}
 
-	private void printBoard() {
+	public void printBoard() {
 		for(int i=0; i<boardSize; i++) {
 			System.out.println();
 			for(int j=0; j<boardSize; j++) {
 				System.out.print(" " + board[i][j]);
 			}
 		}
+		System.out.println();
 	}
 
 	public void setPlayStatus(PlayStatus status) {
@@ -56,6 +56,10 @@ public class TicTacToe {
 	}
 
 	public void playMove(Player player, Integer x, Integer y) {
+		if(playStatus == PlayStatus.NEW) {
+			playStatus = PlayStatus.IN_PROGRESS;
+		}
+		
 		if(!isGameComplete() && totalMoves != boardSize * boardSize) {
 			if(board[x][y] == 0 && player != prevPlayer) {
 				board[x][y] = player.getValue();
