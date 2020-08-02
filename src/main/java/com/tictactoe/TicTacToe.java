@@ -2,6 +2,8 @@ package com.tictactoe;
 
 public class TicTacToe {
 
+	User user1;
+	User user2;
 	int boardSize = 3;
 	Integer[][] board = new Integer[boardSize][boardSize];
 	Integer[] moves = new Integer[boardSize * boardSize];
@@ -55,7 +57,7 @@ public class TicTacToe {
 		this.result = result;
 	}
 
-	public void playMove(PlayerEnum player, Integer x, Integer y) {
+	public Result playMove(PlayerEnum player, Integer x, Integer y) {
 		if(playStatus == PlayStatus.NEW) {
 			playStatus = PlayStatus.IN_PROGRESS;
 		}
@@ -74,14 +76,17 @@ public class TicTacToe {
 			if(isGameComplete()) {
 				playStatus = PlayStatus.COMPLETE;
 				result = Result.getResult(player.getValue());
-				return;
+				return result;
 			}
 		}
 
 		if(isGameComplete() == false && totalMoves == boardSize * boardSize) {
 			result = Result.DRAW;
 			playStatus = PlayStatus.COMPLETE;
+			return result;
 		}
+		
+		return null;
 	}
 
 	private void setNextTurn(PlayerEnum player) {
